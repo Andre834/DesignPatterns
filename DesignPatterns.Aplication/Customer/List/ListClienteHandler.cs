@@ -6,26 +6,26 @@ namespace DesignPatterns.Aplication;
 
 public sealed record ListClienteHandler : IHandler<ListClienteRequest, ListClienteResponse>
 {
-    private readonly IClienteFactory _customerFactory;
-    private readonly IClienteRepository _customerRepository;
+    private readonly IClienteFactory _clienteFactory;
+    private readonly IClienteRepository _clienteRepository;
 
     public ListClienteHandler
     (
-        IClienteFactory customerFactory,
-        IClienteRepository customerRepository
+        IClienteFactory clienteFactory,
+        IClienteRepository clienteRepository
     )
     {
-        _customerFactory = customerFactory;
-        _customerRepository = customerRepository;
+        _clienteFactory = clienteFactory;
+        _clienteRepository = clienteRepository;
     }
 
     public async Task<Result<ListClienteResponse>> HandleAsync(ListClienteRequest request)
     {
-        var customers = await _customerRepository.ListAsync();
+        var clientes = await _clienteRepository.ListAsync();
 
-        if (!customers.Any()) return Result<ListClienteResponse>.Success();
+        if (!clientes.Any()) return Result<ListClienteResponse>.Success();
 
-        var models = customers.Select(_customerFactory.Create);
+        var models = clientes.Select(_clienteFactory.Create);
 
         var response = new ListClienteResponse(models);
 

@@ -1,4 +1,4 @@
-using AlphaCentauri.Application;
+
 using FluentValidation;
 
 namespace DesignPatterns.Aplication;
@@ -7,7 +7,7 @@ public sealed class AddClienteRequestValidator : AbstractValidator<AddClienteReq
 {
     public AddClienteRequestValidator()
     {
-        RuleFor(request => request.Nome).Name();
+        RuleFor(request => request.Nome).Nome();
         RuleFor(request => request.Email).Email();
     }
 }

@@ -1,3 +1,3 @@
 namespace DesignPatterns.Aplication;
 
-public sealed record UpdateClienteRequest(long Id, string Name, string Email);
+public sealed record UpdateClienteRequest(long Id, string Nome, string Email);

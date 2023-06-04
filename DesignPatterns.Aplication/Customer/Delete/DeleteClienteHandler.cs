@@ -8,22 +8,22 @@ namespace DesignPatterns.Aplication;
 
 public sealed record DeleteClienteHandler : IHandler<DeleteClienteRequest>
 {
-    private readonly IClienteRepository _customerRepository;
+    private readonly IClienteRepository _clienteRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public DeleteClienteHandler
     (
-        IClienteRepository customerRepository,
+        IClienteRepository clienteRepository,
         IUnitOfWork unitOfWork
     )
     {
-        _customerRepository = customerRepository;
+        _clienteRepository = clienteRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Result> HandleAsync(DeleteClienteRequest request)
     {
-        _customerRepository.Delete(request.Id);
+        _clienteRepository.Delete(request.Id);
 
         await _unitOfWork.SaveChangesAsync();
 
