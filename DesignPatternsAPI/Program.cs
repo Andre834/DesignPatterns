@@ -1,25 +1,27 @@
+using DesignPatterns.CrossCutting;
+using DesignPatterns.DataBase.DataBase;
+using DesignPatternsAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Host.Serilog();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddContextInMemoryDatabase<Context>();
+builder.Services.AddJsonStringLocalizer();
+builder.Services.AddClassesMatchingInterfaces();
+builder.Services.AddMediator();
+builder.Services.AddResponseCompression();
+builder.Services.AddControllers().AddJsonOptions();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+var application = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+application.UseException();
+application.UseLocalization();
+application.UseSwagger();
+application.UseSwaggerUI();
+application.UseHttpsRedirection();
+application.UseResponseCompression();
+application.MapControllers();
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+application.Run();
